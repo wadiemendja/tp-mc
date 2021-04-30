@@ -16,9 +16,7 @@ public class TP2 {
             return 0;
     }
 
-    public static void main(String args[]) {
-        // data matrix
-        double arr[][] = new double[100][3];
+    static void fill (double arr [][]){
         // filling the first half of the third column with 1's
         for (int i = 0; i < 50; i++) {
             arr[i][2] = 1;
@@ -32,7 +30,9 @@ public class TP2 {
             arr[i][0] = randomize();
             arr[i][1] = randomize();
         }
-        // displaying filled data        
+    }
+
+    static void display (double arr [][]){
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i][0]);
         }
@@ -44,6 +44,16 @@ public class TP2 {
         for (int i = 0; i < arr.length; i++) {
             System.out.println(arr[i][2]);
         }
+    }
+
+    public static void main(String args[]) {
+        // data matrix
+        double arr[][] = new double[100][3];
+        // replissage
+        fill(arr);      
+        // displaying filled data
+        display(arr);  
+        // reading weights
         System.out.print("w0 = ");
         double w0 = read.nextDouble();
         System.out.print("w1 = ");
@@ -51,6 +61,7 @@ public class TP2 {
         System.out.print("w2 = ");
         double w2 = read.nextDouble();
         read.close();
+        // displaying results
         for (int i = 0; i < arr.length; i++) {
             if (sortie(arr[i][0], arr[i][1], w0, w1, w2) == arr[i][2]) {
                 System.out.println("Le réseau pour cette donné x1=" + arr[i][0] + " x2=" + arr[i][1] + " est confort");
