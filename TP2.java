@@ -6,11 +6,12 @@ public class TP2 {
     static Scanner read = new Scanner(System.in);
 
     static double randomize() { // -10 to 10
-        return Math.floor(Math.random() * (10 - (-10) + 1) + (-10));// Math.ceil(Math.random() * 10);
+        return Math.floor(Math.random() * (10 - (-10) + 1) + (-10));
     }
 
-    static double randomize0To1() { // 0 => 1
-        return Double.parseDouble(new DecimalFormat("##.#").format(Math.random()));
+    static double randomizeWeight() { // -1 => 1
+        double random = Double.parseDouble(new DecimalFormat("##.#").format(Math.random()* (1 - (-1) + 1) + (-1)));
+        if (random <= 1 && random >= -1) return random; else return randomizeWeight();
     }
 
     static double sortie(double x1, double x2, double w0, double w1, double w2) {
@@ -63,9 +64,9 @@ public class TP2 {
         // displaying filled data
         display(arr);
         // randomizing weights
-        double w0 = randomize0To1();
-        double w1 = randomize0To1();
-        double w2 = randomize0To1();
+        double w0 = randomizeWeight();
+        double w1 = randomizeWeight();
+        double w2 = randomizeWeight();
         System.out.println("w0 = " + w0 + " w1 = " + w1 + " w2 = " + w2);
         System.out.println("-------------------------");
         // displaying results
@@ -76,5 +77,6 @@ public class TP2 {
                 System.out.println(
                         "Le réseau pour cette donné x1=" + arr[i][0] + " x2=" + arr[i][1] + " n'est pas confort");
         }
+
     }
 }
