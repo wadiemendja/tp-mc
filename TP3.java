@@ -1,7 +1,5 @@
 import java.text.DecimalFormat;
 
-import javax.swing.WindowConstants;
-
 public class TP3 {
 
     static double arr[][] = new double[100][3];
@@ -69,25 +67,76 @@ public class TP3 {
         System.out.println("-------------------------");
     }
 
+    static int percentage = 0;
+
     static void test() {
         for (int i = 0; i < arr.length; i++) {
             if (sortie(arr[i][0], arr[i][1], w0, w1, w2) == arr[i][2]) {
                 System.out.println("Le réseau pour cette donné x1=" + arr[i][0] + " x2=" + arr[i][1] + " est confort");
+                percentage++;
             } else
                 System.out.println(
                         "Le réseau pour cette donné x1=" + arr[i][0] + " x2=" + arr[i][1] + " n'est pas confort");
         }
+        System.out.println(percentage +"% est confort pour les poids initial.");
     }
+
+    static double epcilon = 0.1;
+    static double x0 = 1;
 
     static void hebb (){
-
+        System.out.println("Hebb: ");
+        for (int i = 0; i < arr.length; i++) {
+            double y = sortie(arr[i][0], arr[i][1], w0, w1, w2);
+            double d = arr [i][2];
+            double x1 = arr[i][0];
+            double x2 = arr[i][1];
+            if (y != d) {
+                // modification de poids
+                w0 += epcilon * y * x0;
+                w1 += epcilon * y * x1;
+                w2 += epcilon * y * x2;
+                // changing the format
+                w0 = Double.parseDouble(new DecimalFormat("##.#").format(w0));
+                w1 = Double.parseDouble(new DecimalFormat("##.#").format(w1));
+                w2 = Double.parseDouble(new DecimalFormat("##.#").format(w2));
+                test2();
+            } else ;
+        }
     }
 
-    static void widrow(){
-
+    static void widrow() {
+        System.out.println("Windrow :");
+        for (int i = 0; i < arr.length; i++) {
+            double y = sortie(arr[i][0], arr[i][1], w0, w1, w2);
+            double d = arr [i][2];
+            double x1 = arr[i][0];
+            double x2 = arr[i][1];
+            if (y != d) {
+                // modification de poids
+                w0 += epcilon * (d - y) * x0;
+                w1 += epcilon * (d - y) * x1;
+                w2 += epcilon * (d - y) * x2;
+                // changing the format
+                w0 = Double.parseDouble(new DecimalFormat("##.#").format(w0));
+                w1 = Double.parseDouble(new DecimalFormat("##.#").format(w1));
+                w2 = Double.parseDouble(new DecimalFormat("##.#").format(w2));
+                test2();
+            } else ;
+        }
     }
 
-    public static void main(String args[]) {        
+    static void test2 (){
+        percentage = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (sortie(arr[i][0], arr[i][1], w0, w1, w2) == arr[i][2]) {
+                percentage++;
+            }
+        }
+        System.out.println(percentage + "% est confort pour les poids w0="+ w0 +" w1="+ w1+ " w2="+ w2);
+    }
+
+    public static void main(String args[]) {
         // replissage aléatoire
         fill();
         // displaying filled data
